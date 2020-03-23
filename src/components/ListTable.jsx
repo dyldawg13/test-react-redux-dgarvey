@@ -23,8 +23,12 @@ const selectRow = selectItem => ({
 
 export const ListTable = ({ groceryList, selectItem }) => (
   <div className="listTable">
+    {groceryList.forEach((item, index) => {
+      item.rowId = index + 1;
+    })}
+    ;
     <BootstrapTable
-      keyField="id"
+      keyField="rowId"
       data={groceryList}
       columns={columns}
       selectRow={selectRow(selectItem)}
