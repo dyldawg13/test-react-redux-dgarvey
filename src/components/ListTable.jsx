@@ -9,29 +9,25 @@ const columns = [
   {
     dataField: "name",
     text: "Product Name"
-  },
-  {
-    dataField: "price",
-    text: "Product Price"
   }
 ];
-const products = [
-  { id: 1, name: "item name 0", price: 2100 },
-  { id: 2, name: "item name 1", price: 2100 },
-  { id: 3, name: "item name 2", price: 2100 }
-];
-const selectRow = {
-  mode: "radio",
-  clickToSelect: true
-};
 
-export const ListTable = () => (
+const selectRow = selectItem => ({
+  mode: "radio",
+  clickToSelect: true,
+  onSelect: (row, isSelect, rowIndex, e) => {
+    selectItem(row);
+    // console.log(row);
+  }
+});
+
+export const ListTable = ({ groceryList, selectItem }) => (
   <div className="listTable">
     <BootstrapTable
       keyField="id"
-      data={products}
+      data={groceryList}
       columns={columns}
-      selectRow={selectRow}
+      selectRow={selectRow(selectItem)}
     />
   </div>
 );

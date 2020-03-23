@@ -1,36 +1,38 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
-import { addItem } from '../ducks/groceries';
+import { addItem, selectItem } from "../ducks/groceries";
 
-import ListInputs from './ListInputs';
-import ListSelection from './ListSelection';
-import ListTable from './ListTable';
+import ListInputs from "./ListInputs";
+import ListSelection from "./ListSelection";
+import ListTable from "./ListTable";
 
 const mapStateToProps = ({
-  groceries: {
-    list: groceryList,
-  },
+  groceries: { list: groceryList, selectedItem }
 }) => ({
   groceryList,
+  selectedItem
 });
 
-const mapDispatchToProps = dispatch => (
-  bindActionCreators({
-    addItem,
-  }, dispatch)
-);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      addItem,
+      selectItem
+    },
+    dispatch
+  );
 
 class ListContainer extends Component {
   componentWillMount() {
     /* eslint-disable no-console */
-    console.log('groceryList', this.props.groceryList, this);
+    console.log("groceryList", this.props.groceryList, this);
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('groceryList', nextProps.groceryList, this);
+    console.log("groceryList", nextProps.groceryList, this);
   }
 
   render() {
@@ -40,8 +42,12 @@ class ListContainer extends Component {
           <ListInputs addItem={this.props.addItem} />
         </div>
         <div className="types">
-          <ListSelection />
-          <ListTable />
+          <ListSelection selectedItem={this.props.selectedItem} />
+          <ListTable
+            groceryList={this.props.groceryList}
+            selectItem={this.props.selectItem}
+          />
+          {console.log(selectItem)}
         </div>
       </section>
     );
@@ -52,11 +58,15 @@ ListContainer.propTypes = {
   // Props
   // Actions
   addItem: PropTypes.func.isRequired,
+  selectItem: PropTypes.func.isRequired,
   // Store
-  groceryList: PropTypes.array.isRequired,
+  groceryList: PropTypes.array.isRequired
   // Other
 };
 
-const ListContainerRedux = connect(mapStateToProps, mapDispatchToProps)(ListContainer);
+const ListContainerRedux = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ListContainer);
 
 export default ListContainerRedux;

@@ -1,8 +1,13 @@
-import React from 'react';
+import React from "react";
 
-const ListSelection = () => (
+const ListSelection = ({
+  selectedItem: { category, deliveryMethod, id, name }
+}) => (
   <div className="listSelection">
-    ListSelection
+    {category}
+    {deliveryMethod}
+    {id}
+    {name}
   </div>
 );
 
