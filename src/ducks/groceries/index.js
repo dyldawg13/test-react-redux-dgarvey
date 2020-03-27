@@ -55,8 +55,10 @@ export default function reducer(state = initialState, action) {
       });
 
     case REMOVE_ITEM:
-      // Write a custom reducer that will remove an item from the list array
-      return state;
+      return update(state, {
+        list: { $splice: [[payload.rowId - 1, 1]] },
+        selectedItem: { $set: initialState.selectedItem }
+      });
 
     case SELECT_ITEM:
       return update(state, {
@@ -80,5 +82,10 @@ export const addItem = item => ({
 
 export const selectItem = item => ({
   type: SELECT_ITEM,
+  payload: item
+});
+
+export const removeItem = item => ({
+  type: REMOVE_ITEM,
   payload: item
 });
