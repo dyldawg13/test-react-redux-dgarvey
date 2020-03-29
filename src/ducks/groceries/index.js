@@ -56,8 +56,7 @@ export default function reducer(state = initialState, action) {
 
     case REMOVE_ITEM:
       return update(state, {
-        list: { $splice: [[payload.rowId - 1, 1]] },
-        selectedItem: { $set: initialState.selectedItem }
+        list: { $splice: [[payload, 1]] }
       });
 
     case SELECT_ITEM:
@@ -66,8 +65,9 @@ export default function reducer(state = initialState, action) {
       });
 
     case DESELECT_ITEM:
-      // Write a customer reducer that will deselect an item
-      return state;
+      return update(state, {
+        selectedItem: { $set: {} }
+      });
 
     default:
       return state;
@@ -87,5 +87,10 @@ export const selectItem = item => ({
 
 export const removeItem = item => ({
   type: REMOVE_ITEM,
+  payload: item
+});
+
+export const deSelectItem = item => ({
+  type: DESELECT_ITEM,
   payload: item
 });

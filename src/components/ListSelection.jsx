@@ -4,10 +4,18 @@ const ListSelection = ({
   selectedItem: { category, deliveryMethod, id, name }
 }) => (
   <div className="listSelection">
-    {category}
-    {deliveryMethod}
-    {id}
-    {name}
+    <tr>
+      <th>Id</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Delivery Method</th>
+    </tr>
+    <tr>
+      <td>{id}</td>
+      <td>{name}</td>
+      <td>{category}</td>
+      <td>{deliveryMethod}</td>
+    </tr>
   </div>
 );
 

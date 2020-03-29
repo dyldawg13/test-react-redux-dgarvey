@@ -3,7 +3,12 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 
-import { addItem, selectItem, removeItem } from "../ducks/groceries";
+import {
+  addItem,
+  selectItem,
+  removeItem,
+  deSelectItem
+} from "../ducks/groceries";
 
 import ListInputs from "./ListInputs";
 import ListSelection from "./ListSelection";
@@ -21,7 +26,8 @@ const mapDispatchToProps = dispatch =>
     {
       addItem,
       selectItem,
-      removeItem
+      removeItem,
+      deSelectItem
     },
     dispatch
   );
@@ -40,17 +46,16 @@ class ListContainer extends Component {
     return (
       <section className="groceryApp">
         <div className="listInputs">
-          <ListInputs
-            addItem={this.props.addItem}
-            removeItem={this.props.removeItem}
-            selectedItem={this.props.selectedItem}
-          />
+          <ListInputs addItem={this.props.addItem} />
         </div>
         <div className="types">
           <ListSelection selectedItem={this.props.selectedItem} />
+          {console.log(this.props.selectedItem, "hit")}
           <ListTable
             groceryList={this.props.groceryList}
             selectItem={this.props.selectItem}
+            removeItem={this.props.removeItem}
+            deSelectItem={this.props.deSelectItem}
           />
           {/* {console.log(selectItem)} */}
         </div>
@@ -65,6 +70,7 @@ ListContainer.propTypes = {
   addItem: PropTypes.func.isRequired,
   removeItem: PropTypes.func.isRequired,
   selectItem: PropTypes.func.isRequired,
+  deselectItem: PropTypes.func.isRequired,
   // Store
   groceryList: PropTypes.array.isRequired
   // Other

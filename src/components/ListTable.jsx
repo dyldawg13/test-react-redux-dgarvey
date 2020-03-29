@@ -1,33 +1,54 @@
 import React from "react";
-import BootstrapTable from "react-bootstrap-table-next";
 
-const columns = [
-  {
-    dataField: "name",
-    text: "Product Name"
-  }
-];
+const ListTable = ({ groceryList, selectItem, deSelectItem, removeItem }) => {
+  const handleSelectItem = groceryListItem => {
+    selectItem(groceryListItem);
+  };
 
-const selectRow = selectItem => ({
-  mode: "radio",
-  clickToSelect: true,
-  onSelect: (row, isSelect, rowIndex, e) => {
-    selectItem(row);
-  }
-});
+  const handleDeSelectItem = index => {
+    deSelectItem(index);
+  };
 
-export const ListTable = ({ groceryList, selectItem }) => (
-  <div className="listTable">
-    {groceryList.forEach((item, index) => {
-      item.rowId = index + 1;
-    })}
-    <BootstrapTable
-      keyField="rowId"
-      data={groceryList}
-      columns={columns}
-      selectRow={selectRow(selectItem)}
-    />
-  </div>
-);
+  const handleRemoveItem = index => {
+    removeItem(index);
+  };
+
+  const tableData = groceryList.map((groceryListItem, index) => {
+    const { name, category, deliveryMethod } = groceryListItem;
+    return (
+      <tr key={index}>
+        <td>{name}</td>
+        <td>{category}</td>
+        <td>{deliveryMethod}</td>
+        <td>
+          <button onClick={() => handleSelectItem(groceryListItem)}>
+            Select
+          </button>
+          <button onClick={() => handleDeSelectItem(index)}>Deselect</button>
+          <button onClick={() => handleRemoveItem(index)}>Remove</button>
+        </td>
+      </tr>
+    );
+  });
+
+  const tableHeader = (
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Delivery</th>
+        </tr>
+      </thead>
+    </table>
+  );
+
+  return (
+    <div className="listTable">
+      {tableHeader}
+      {tableData}
+    </div>
+  );
+};
 
 export default ListTable;

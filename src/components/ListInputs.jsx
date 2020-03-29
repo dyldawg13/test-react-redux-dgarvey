@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export const ListInputs = ({ addItem, removeItem, selectedItem }) => {
+export const ListInputs = ({ addItem }) => {
   const createItem = () => {
     const item = {
       id: 10,
@@ -17,12 +17,6 @@ export const ListInputs = ({ addItem, removeItem, selectedItem }) => {
     <div>
       <button className="addItemButton" onClick={createItem}>
         Add Random Item
-      </button>
-      <button
-        className="removeItemButton"
-        onClick={() => removeItem(selectedItem)}
-      >
-        Remove Selected Item
       </button>
     </div>
   );
